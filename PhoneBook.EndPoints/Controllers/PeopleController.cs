@@ -19,7 +19,8 @@ namespace PhoneBook.EndPoints.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var people = _personRepository.GetAll().ToList();   
+            return View(people);
         }
         public IActionResult Add()
         {
@@ -43,19 +44,28 @@ namespace PhoneBook.EndPoints.Controllers
                         TagId = c
                     }).ToList())
                 };
-                if (model.Image.Length > 0)
+                if (model?.Image?.Length > 0)
                 {
-                    using(var ms = new MemoryStream())
+                    using (var ms = new MemoryStream())
                     {
                         model.Image.CopyTo(ms);
-                        var fileByte=ms.ToArray();
-                        person.Image=Convert.ToBase64String(fileByte);
+                        var fileByte = ms.ToArray();
+                        person.Image = Convert.ToBase64String(fileByte);
                     }
                 }
                 _personRepository.Add(person);
                 return RedirectToAction("Index");
+            }
+
+            AddPersonDisplayViewModel modelForDisplay = new AddPersonDisplayViewModel
+            {
+                Address = model.Address,
+                Email = model.Email,
+                LastName = model.LastName,
+                FirstName = model.FirstName,
+            };
+            modelForDisplay.TagsForDisplay = _tagRepository.GetAll().ToList();
+            return View(modelForDisplay);
         }
-            return View();
     }
-}
 }

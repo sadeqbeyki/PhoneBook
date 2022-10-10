@@ -1,0 +1,26 @@
+﻿@model List<PhoneBook.Domain.Core.People.Person>
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if(Model!=null && Model.Count>0){
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Details</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td><a asp-controller="People" asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+            </tr>
+        }
+    </table>
+}
+
