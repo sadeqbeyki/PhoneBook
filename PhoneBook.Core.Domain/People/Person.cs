@@ -1,7 +1,4 @@
 ﻿using PhoneBook.Domain.Core.Phones;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PhoneBook.Domain.Core.People
 {

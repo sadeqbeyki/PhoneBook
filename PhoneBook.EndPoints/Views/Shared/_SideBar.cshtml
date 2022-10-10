@@ -1,0 +1,32 @@
+﻿<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePeople" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>People</span>
+        </a>
+        <div id="collapsePeople" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Custom Components:</h6>
+                <a class="collapse-item" asp-controller="People" asp-action="Add">Add</a>
+                <a class="collapse-item" asp-controller="People" asp-action="Index">List</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAAA" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>AAA</span>
+        </a>
+        <div id="collapseAAA" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Users:</h6>
+                <a class="collapse-item" asp-controller="User" asp-action="Index">List</a>
+                <a class="collapse-item" asp-controller="User" asp-action="Create">Add User</a>
+            </div>
+        </div>
+    </li>
+
+
+</ul>
