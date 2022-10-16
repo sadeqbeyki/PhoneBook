@@ -6,7 +6,7 @@ namespace PhoneBook.EndPoints.Models.People
     public abstract class AddPersonViewModel
     {
         [Required]
-        [StringLength(50,MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         public string FirstName { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3)]
@@ -19,12 +19,14 @@ namespace PhoneBook.EndPoints.Models.People
         public IFormFile Image { get; set; }
     }
 
-    public class AddPersonGetViewModel : AddPersonViewModel
-    {
-        public List<int> SelectedTags { get; set; }
-    }
+
     public class AddPersonDisplayViewModel : AddPersonViewModel
     {
         public List<Tag> TagsForDisplay { get; set; }
+    }
+
+    public class AddPersonGetViewModel : AddPersonViewModel
+    {
+        public List<int> SelectedTags { get; set; }
     }
 }

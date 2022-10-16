@@ -24,8 +24,10 @@ namespace PhoneBook.EndPoints.Controllers
         }
         public IActionResult Add()
         {
-            AddPersonDisplayViewModel model = new AddPersonDisplayViewModel();
-            model.TagsForDisplay = _tagRepository.GetAll().ToList();
+            AddPersonDisplayViewModel model = new()
+            {
+                TagsForDisplay = _tagRepository.GetAll().ToList()
+            };
             return View(model);
         }
         [HttpPost]
@@ -33,7 +35,7 @@ namespace PhoneBook.EndPoints.Controllers
         {
             if (ModelState.IsValid)
             {
-                Person person = new Person
+                Person person = new()
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
@@ -44,6 +46,8 @@ namespace PhoneBook.EndPoints.Controllers
                         TagId = c
                     }).ToList())
                 };
+                #region Image
+
                 if (model?.Image?.Length > 0)
                 {
                     using (var ms = new MemoryStream())
@@ -53,18 +57,19 @@ namespace PhoneBook.EndPoints.Controllers
                         person.Image = Convert.ToBase64String(fileByte);
                     }
                 }
+                #endregion
                 _personRepository.Add(person);
                 return RedirectToAction("Index");
             }
 
-            AddPersonDisplayViewModel modelForDisplay = new AddPersonDisplayViewModel
+            AddPersonDisplayViewModel modelForDisplay = new()
             {
                 Address = model.Address,
                 Email = model.Email,
                 LastName = model.LastName,
                 FirstName = model.FirstName,
+                TagsForDisplay = _tagRepository.GetAll().ToList()
             };
-            modelForDisplay.TagsForDisplay = _tagRepository.GetAll().ToList();
             return View(modelForDisplay);
         }
     }
