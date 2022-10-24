@@ -1,0 +1,22 @@
+﻿@model UpdateUserViewModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<form asp-action="Update" asp-controller="User" method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label">UserName</label>
+        <input type="text" asp-for="UserName" class="form-control" maxlength="50">
+        <span asp-validation-for=UserName></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input type="text" asp-for="Email" class="form-control" maxlength="100">
+        <span asp-validation-for="Email"></span>
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+    @*<input type="submit" class="btn btn-primary" value="Save" />*@
+</form>
+

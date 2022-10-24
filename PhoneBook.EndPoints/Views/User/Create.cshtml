@@ -1,0 +1,30 @@
+﻿@model CreateUserViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <form asp-action="Create" asp-controller="User" method="post">
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="UserName" class="form-label">UserName</label>
+            <input type="text" asp-for="UserName" class="form-control" maxlength="50">
+            <span asp-validation-for=UserName></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input type="text" asp-for="Email" class="form-control" maxlength="256">
+            <span asp-validation-for=Email></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Password</label>
+            <input type="text" asp-for="Password" class="form-control" maxlength="500">
+            <span asp-validation-for=Password></span>
+        </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    @*<input type="submit" class="btn btn-primary" value="Save" />*@
+    </form>
+
+
+
+

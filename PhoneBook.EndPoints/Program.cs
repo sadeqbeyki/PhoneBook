@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PhoneBook.EndPoints.Models.AAA;
 using PhoneBook.Infrastructure.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,24 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("PhoneBookDB");
 ConfigureServices.Configure(builder.Services, connectionString);
+
+builder.Services.AddScoped<IPasswordValidator<AppUser>, CPBPasswordValidator>();
+builder.Services.AddScoped<IUserValidator<AppUser>, PBUserValidator>();
+
+builder.Services.AddIdentity<AppUser, IdentityRole>(c =>
+{
+    c.User.RequireUniqueEmail = true;
+    //c.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnmPOIUYTREWQLKJHGFDSAMNBVCXZ";
+    c.Password.RequireDigit = false;
+    c.Password.RequiredLength = 6;
+    c.Password.RequireNonAlphanumeric = false;
+    c.Password.RequireUppercase = false;
+    c.Password.RequiredUniqueChars = 1;
+    c.Password.RequireLowercase = false;
+}).AddEntityFrameworkStores<UserDbContext>();
+
+builder.Services.AddDbContext<UserDbContext>(c => 
+    c.UseSqlServer(builder.Configuration.GetConnectionString("aaa")));
 
 var app = builder.Build();
 
@@ -21,6 +41,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseAuthentication();
 
 app.UseRouting();
 
