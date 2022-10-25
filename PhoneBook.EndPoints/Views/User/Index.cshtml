@@ -21,6 +21,8 @@
                     <a asp-controller="User" asp-action="Update" asp-route-id="@item.Id">Update</a>
                     |
                     <a asp-controller="User" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    |
+                    <a asp-controller="User" asp-action="AddToRole" asp-route-id="@item.Id" asp-route-roleName="admin">Make it admin</a>
                 </td>
             </tr>
         }

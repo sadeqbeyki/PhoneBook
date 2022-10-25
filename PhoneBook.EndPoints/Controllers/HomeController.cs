@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PhoneBook.Core.Contracts.People;
-using PhoneBook.Domain.Core.People;
-using PhoneBook.EndPoints.Models;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PhoneBook.EndPoints.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

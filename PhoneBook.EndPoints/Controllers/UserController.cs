@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.EndPoints.Models.AAA;
 
 namespace PhoneBook.EndPoints.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         public readonly UserManager<AppUser> userManager;
@@ -12,12 +14,14 @@ namespace PhoneBook.EndPoints.Controllers
         {
             this.userManager = userManager;
         }
-
+        #region Read
         public IActionResult Index()
         {
             var user = userManager.Users.Take(50).ToList();
             return View(user);
         }
+        #endregion
+        #region Create
         public IActionResult Create()
         {
             return View();
@@ -48,9 +52,11 @@ namespace PhoneBook.EndPoints.Controllers
             return View(model);
         }
 
-        public IActionResult Update(string id)
+        #endregion
+        #region Update
+        public IActionResult Update(int id)
         {
-            var user = userManager.FindByIdAsync(id).Result;
+            var user = userManager.FindByIdAsync(id.ToString()).Result;
             if (user != null)
             {
                 UpdateUserViewModel model = new()
@@ -63,9 +69,9 @@ namespace PhoneBook.EndPoints.Controllers
             return NotFound();
         }
         [HttpPut]
-        public IActionResult Update(string id, UpdateUserViewModel model)
+        public IActionResult Update(int id, UpdateUserViewModel model)
         {
-            var user = userManager.FindByIdAsync(id).Result;
+            var user = userManager.FindByIdAsync(id.ToString()).Result;
             if (user != null)
             {
                 user.Email = model.Email;
@@ -87,9 +93,11 @@ namespace PhoneBook.EndPoints.Controllers
             }
             return NotFound();
         }
-        public IActionResult Delete(string id)
+        #endregion
+        #region Delete
+        public IActionResult Delete(int id)
         {
-            var user = userManager.FindByIdAsync(id).Result;
+            var user = userManager.FindByIdAsync(id.ToString()).Result;
             if (user != null)
             {
                 var result = userManager.DeleteAsync(user).Result;
@@ -107,5 +115,17 @@ namespace PhoneBook.EndPoints.Controllers
             }
             return View();
         }
+        #endregion
+        #region AddToRole
+        public IActionResult AddToRole(int id, string roleName)
+        {
+            var user = userManager.FindByIdAsync(id.ToString()).Result;
+            if (user != null)
+            {
+                var result = userManager.AddToRoleAsync(user, roleName).Result;
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
     }
 }

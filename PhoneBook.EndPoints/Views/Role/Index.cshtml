@@ -1,0 +1,16 @@
+﻿@using PhoneBook.EndPoints.Models.AAA
+@model List<PBIdentityRole>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table>
+    <tr><th>Role Name</th></tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+        </tr>
+    }
+</table>

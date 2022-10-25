@@ -11,10 +11,13 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("PhoneBookDB");
 ConfigureServices.Configure(builder.Services, connectionString);
 
+builder.Services.AddDbContext<UserDbContext>(c =>
+    c.UseSqlServer(builder.Configuration.GetConnectionString("aaa")));
+
 builder.Services.AddScoped<IPasswordValidator<AppUser>, CPBPasswordValidator>();
 builder.Services.AddScoped<IUserValidator<AppUser>, PBUserValidator>();
 
-builder.Services.AddIdentity<AppUser, IdentityRole>(c =>
+builder.Services.AddIdentity<AppUser, PBIdentityRole>(c =>
 {
     c.User.RequireUniqueEmail = true;
     //c.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnmPOIUYTREWQLKJHGFDSAMNBVCXZ";
@@ -26,8 +29,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(c =>
     c.Password.RequireLowercase = false;
 }).AddEntityFrameworkStores<UserDbContext>();
 
-builder.Services.AddDbContext<UserDbContext>(c => 
-    c.UseSqlServer(builder.Configuration.GetConnectionString("aaa")));
+
 
 var app = builder.Build();
 
