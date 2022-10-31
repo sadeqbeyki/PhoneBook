@@ -1,12 +1,14 @@
-﻿@model PhoneBook.EndPoints.Models.People.AddPersonDisplayViewModel
+﻿@model PhoneBook.EndPoints.Models.People.PersonAndTagsViewModel
 
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Create";
 }
+
 @section head{
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 }
-<form asp-action="Add" asp-controller="People" method="post" enctype="multipart/form-data">
+
+<form asp-action="Create" asp-controller="People" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All"></div>
     <div class="mb-3">
         <label asp-for="FirstName" class="form-label" >Name</label>

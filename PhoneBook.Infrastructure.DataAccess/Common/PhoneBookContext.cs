@@ -20,10 +20,6 @@ namespace PhoneBook.Infrastructures.DataLayer.Common
         {
             var assembly = typeof(PersonConfig).Assembly;
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
-            //modelbuilder.ApplyConfiguration(new PersonConfig());
-            //modelbuilder.ApplyConfiguration(new PersonTagConfig());
-            //modelbuilder.ApplyConfiguration(new PhoneConfig());
-            //modelbuilder.ApplyConfiguration(new TagConfig());
             base.OnModelCreating(modelBuilder);
         }
     }

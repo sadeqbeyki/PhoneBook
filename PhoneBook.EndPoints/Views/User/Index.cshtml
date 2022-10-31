@@ -3,9 +3,14 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div>
+  <a asp-controller="User" asp-action="Create">Add User</a>
+</div>
+<br />
 
 <table class="table table-bordered table-striped">
     <tr>
+        <th>Full Name</th>
         <th>User Name</th>
         <th>Email</th>
         <th>Details</th>
@@ -15,6 +20,7 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.FirstName @item.LastName</td>
                 <td>@item.UserName</td>
                 <td>@item.Email</td>
                 <td>

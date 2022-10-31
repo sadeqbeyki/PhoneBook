@@ -3,7 +3,13 @@
     ViewData["Title"] = "Index";
 }
 
-@if(Model!=null && Model.Count>0){
+<div>
+    <a asp-controller="People" asp-action="Create">Add People</a>
+</div>
+<br />
+
+@if (Model != null && Model.Count > 0)
+{
 
     <table class="table table-bordered table-striped">
         <tr>
@@ -18,7 +24,14 @@
                 <td>@item.FirstName</td>
                 <td>@item.LastName</td>
                 <td>@item.Email</td>
-                <td><a asp-controller="People" asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+                <td>
+                    <a asp-controller="People" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+                <td>
+                    <a asp-controller="People" asp-action="Update" asp-route-id="@item.Id">Update</a>
+                    |
+                    <a asp-controller="People" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
         }
     </table>

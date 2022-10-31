@@ -8,12 +8,12 @@ namespace PhoneBook.EndPoints.Models.AAA
         {
             List<IdentityError> errors = new();
 
-            //if (!user.Email.EndsWith("@nikamooz.com"))
+            //if (!user.Email.EndsWith("@xserver.com"))
             //{
             //    errors.Add(new IdentityError
             //    {
             //        Code = "InvalidEmail",
-            //        Description = "Use nikamooz email for Registration"
+            //        Description = "Use xServer email for Registration"
             //    });
             //}
 

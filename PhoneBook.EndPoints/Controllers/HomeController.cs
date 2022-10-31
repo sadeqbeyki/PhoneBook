@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PhoneBook.EndPoints.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

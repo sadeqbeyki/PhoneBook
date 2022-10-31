@@ -4,10 +4,11 @@ using PhoneBook.Core.Contracts.People;
 using PhoneBook.Core.Contracts.Tags;
 using PhoneBook.Domain.Core.People;
 using PhoneBook.EndPoints.Models.People;
+using System.ComponentModel;
 
 namespace PhoneBook.EndPoints.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PeopleController : Controller
     {
         private readonly ITagRepository _tagRepository;
@@ -21,19 +22,22 @@ namespace PhoneBook.EndPoints.Controllers
 
         public IActionResult Index()
         {
-            var people = _personRepository.GetAll().ToList();   
+            var people = _personRepository.GetAll().ToList();
             return View(people);
         }
-        public IActionResult Add()
+
+        #region Create
+        [HttpGet]
+        public IActionResult Create()
         {
-            AddPersonDisplayViewModel model = new()
+            PersonAndTagsViewModel model = new()
             {
                 TagsForDisplay = _tagRepository.GetAll().ToList()
             };
             return View(model);
         }
         [HttpPost]
-        public IActionResult Add(AddPersonGetViewModel model)
+        public IActionResult Create(CreatePersonViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -49,30 +53,61 @@ namespace PhoneBook.EndPoints.Controllers
                     }).ToList())
                 };
                 #region Image
-
                 if (model?.Image?.Length > 0)
                 {
-                    using (var ms = new MemoryStream())
-                    {
-                        model.Image.CopyTo(ms);
-                        var fileByte = ms.ToArray();
-                        person.Image = Convert.ToBase64String(fileByte);
-                    }
+                    using var memoryStream = new MemoryStream();
+                    model.Image.CopyTo(memoryStream);
+                    var fileByte = memoryStream.ToArray();
+                    person.Image = Convert.ToBase64String(fileByte);
                 }
                 #endregion
-                _personRepository.Add(person);
+                _personRepository.Create(person);
                 return RedirectToAction("Index");
             }
-
-            AddPersonDisplayViewModel modelForDisplay = new()
-            {
-                Address = model.Address,
-                Email = model.Email,
-                LastName = model.LastName,
-                FirstName = model.FirstName,
-                TagsForDisplay = _tagRepository.GetAll().ToList()
-            };
-            return View(modelForDisplay);
+            return View(model);
         }
+        #endregion
+
+        #region Update
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var person = _personRepository.Get(id);
+            if (person != null)
+            {
+                UpdatePersonViewModel model = new()
+                {
+                    Id = id,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    Email = person.Email,
+                    Address = person.Address,
+                    //SelectedTags = new List<PersonTag>(person.Tags.Select(x => new PersonTag
+                    //{
+                    //    TagId = x
+                    //}).ToList())
+                    //Image = person.Image(Convert.FromBase64String(fileByte)),
+                };
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult Update(int id, UpdatePersonViewModel model)
+        {
+            var person = _personRepository.Get(id);
+            if (person != null)
+            {
+                person.FirstName = model.FirstName;
+                person.LastName = model.LastName;
+                person.Email = model.Email;
+                person.Address = model.Address;
+
+            }
+
+            return View(model);
+        }
+        #endregion
+
     }
 }

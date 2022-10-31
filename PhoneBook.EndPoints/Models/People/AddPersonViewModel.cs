@@ -1,9 +1,10 @@
 ﻿using PhoneBook.Domain.Core.Tags;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhoneBook.EndPoints.Models.People
 {
-    public abstract class AddPersonViewModel
+    public abstract class PersonViewModel
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]
@@ -20,13 +21,21 @@ namespace PhoneBook.EndPoints.Models.People
     }
 
 
-    public class AddPersonDisplayViewModel : AddPersonViewModel
+    public class PersonAndTagsViewModel : PersonViewModel
     {
         public List<Tag> TagsForDisplay { get; set; }
+
     }
 
-    public class AddPersonGetViewModel : AddPersonViewModel
+    public class CreatePersonViewModel : PersonViewModel
     {
+        //public List<Tag> TagsForDisplay { get; set; }
+
+        public List<int> SelectedTags { get; set; }
+    }
+    public class UpdatePersonViewModel : PersonAndTagsViewModel
+    {
+        public int Id { get; set; }
         public List<int> SelectedTags { get; set; }
     }
 }

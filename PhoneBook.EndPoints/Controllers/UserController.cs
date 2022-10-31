@@ -5,7 +5,7 @@ using PhoneBook.EndPoints.Models.AAA;
 
 namespace PhoneBook.EndPoints.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         public readonly UserManager<AppUser> userManager;
@@ -33,6 +33,9 @@ namespace PhoneBook.EndPoints.Controllers
             {
                 AppUser user = new()
                 {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    BirthDate = model.BirthDate,
                     UserName = model.UserName,
                     Email = model.Email
                 };
@@ -54,28 +57,38 @@ namespace PhoneBook.EndPoints.Controllers
 
         #endregion
         #region Update
-        public IActionResult Update(int id)
+        [HttpGet]
+        public IActionResult Update(int? id)
         {
             var user = userManager.FindByIdAsync(id.ToString()).Result;
             if (user != null)
             {
                 UpdateUserViewModel model = new()
                 {
-                    Email = user.Email,
+                    Id = user.Id,
                     UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    BirthDate = user.BirthDate,
+                    Email = user.Email,
                 };
                 return View(model);
             }
             return NotFound();
         }
-        [HttpPut]
-        public IActionResult Update(int id, UpdateUserViewModel model)
+        [HttpPost]
+        public IActionResult Update(int? id, UpdateUserViewModel model)
         {
+            //if (ModelState.IsValid)
+            //{
             var user = userManager.FindByIdAsync(id.ToString()).Result;
             if (user != null)
             {
-                user.Email = model.Email;
                 user.UserName = model.UserName;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.BirthDate = model.BirthDate;
+                user.Email = model.Email;
 
                 var result = userManager.UpdateAsync(user).Result;
                 if (result.Succeeded)
@@ -91,6 +104,7 @@ namespace PhoneBook.EndPoints.Controllers
                 }
                 return View(model);
             }
+            //}
             return NotFound();
         }
         #endregion

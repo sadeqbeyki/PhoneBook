@@ -2,7 +2,7 @@
 
 namespace PhoneBook.Domain.Core.People
 {
-    public class Person: BaseEntity
+    public class Person : BaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

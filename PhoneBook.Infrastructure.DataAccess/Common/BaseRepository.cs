@@ -13,7 +13,7 @@ namespace PhoneBook.Infrastructures.Common
         {
             this.dbContext = dbContext;
         }
-        public TEntity Add(TEntity entity)
+        public TEntity Create(TEntity entity)
         {
             dbContext.Set<TEntity>().Add(entity);
             dbContext.SaveChanges();
