@@ -1,5 +1,4 @@
 ﻿using PhoneBook.Domain.Core.Tags;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhoneBook.EndPoints.Models.People
@@ -36,6 +35,6 @@ namespace PhoneBook.EndPoints.Models.People
     public class UpdatePersonViewModel : PersonAndTagsViewModel
     {
         public int Id { get; set; }
-        public List<int> SelectedTags { get; set; }
+        //public List<int> SelectedTags { get; set; }
     }
 }

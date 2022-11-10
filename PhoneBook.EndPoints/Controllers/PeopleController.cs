@@ -86,7 +86,7 @@ namespace PhoneBook.EndPoints.Controllers
                     //{
                     //    TagId = x
                     //}).ToList())
-                    //Image = person.Image(Convert.FromBase64String(fileByte)),
+                    //Image = Convert.FromBase64String(person.Image),
                 };
                 return View(model);
             }
@@ -109,5 +109,12 @@ namespace PhoneBook.EndPoints.Controllers
         }
         #endregion
 
+        #region Delete
+        public IActionResult Delete(int id)
+        {
+            _personRepository.Delete(id);
+            return RedirectToAction("Index");
+        }
+        #endregion
     }
 }
